@@ -156,7 +156,7 @@ public class AnnotationScannerListener implements ScannerListener {
         private boolean isAnnotated;
 
         private AnnotatedClassVisitor() {
-            super(Opcodes.ASM7);
+            super(Opcodes.ASM9);
         }
 
         public void visit(int version, int access, String name,
